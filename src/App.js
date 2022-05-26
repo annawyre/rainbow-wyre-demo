@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  apiProvider,
+  configureChains,
+  ConnectButton,
+  getDefaultWallets,
+  // midnightTheme,
+  darkTheme,
+  RainbowKitProvider
+} from '@rainbow-me/rainbowkit';
+import { chain, createClient, WagmiProvider } from 'wagmi';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const { chains, provider } = configureChains(
+    [chain.mainnet, chain.kovan, chain.polygon, chain.polygonMumbai],
+    [apiProvider.fallback()]
   );
+
+  const { connectors } = getDefaultWallets({
+    chains
+  });
+
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider
+  });
+
+  return<WagmiProvider client={wagmiClient}>
+    <RainbowKitProvider 
+      theme=
+        // {midnightTheme()}
+        {darkTheme()}
+      coolMode 
+      chains={chains}
+    >
+        <ConnectButton/>          
+    </RainbowKitProvider>
+  </WagmiProvider>
 }
 
 export default App;
