@@ -3,7 +3,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Get Started
 
 In terminal:
+
 `git clone git@github.com:annawyre/rainbow-wyre-demo.git`
+
 `cd rainbow-wyre-demo`
+
 `npm start`
 
